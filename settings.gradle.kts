@@ -20,3 +20,4 @@ rootProject.name = "RawgGamesBrowser"
 include(":app")
 include(":core:common")
 include(":core:domain")
+include(":core:network")
