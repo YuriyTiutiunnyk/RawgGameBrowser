@@ -28,8 +28,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,6 +37,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import com.rawg.core.presentation.components.ErrorScreen
 import com.rawg.core.presentation.components.LoadingScreen
+import com.rawg.core.presentation.screen.BaseScreen
 import com.rawg.core.ui.components.NetworkImage
 import com.rawg.core.ui.components.RatingBar
 import com.rawg.core.ui.theme.GradientOverlayEnd
@@ -70,9 +69,8 @@ fun GameDetailScreen(
     onNavigateBack: () -> Unit,
     viewModel: GameDetailVm = koinViewModel { parametersOf(gameId) }
 ) {
-    val state by viewModel.state.collectAsStateWithLifecycle()
-
-    Scaffold(
+    BaseScreen(viewModel) { state, onEvent ->
+        Scaffold(
             topBar = {
                 TopAppBar(
                     title = {
@@ -103,7 +101,7 @@ fun GameDetailScreen(
                 state.error != null -> {
                     ErrorScreen(
                         message = state.error,
-                        onRetry = { viewModel.handleEvent(GameDetailEvent.OnRetry) },
+                        onRetry = { onEvent(GameDetailEvent.OnRetry) },
                         modifier = Modifier.padding(paddingValues)
                     )
                 }

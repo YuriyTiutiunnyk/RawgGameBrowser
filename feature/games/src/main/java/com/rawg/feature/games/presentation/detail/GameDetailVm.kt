@@ -1,6 +1,5 @@
 package com.rawg.feature.games.presentation.detail
 
-import com.rawg.core.common.result.DataState
 import com.rawg.core.presentation.extensions.networkExecutor
 import com.rawg.core.presentation.vm.BaseVm
 import com.rawg.feature.games.domain.interactor.GetGameDetailUseCase
@@ -10,9 +9,7 @@ class GameDetailVm(
     private val getGameDetailUseCase: GetGameDetailUseCase
 ) : BaseVm<GameDetailState, GameDetailEvent>(GameDetailState()) {
 
-    init {
-        loadGameDetail()
-    }
+    init { loadGameDetail() }
 
     override fun handleEvent(event: GameDetailEvent) {
         when (event) {

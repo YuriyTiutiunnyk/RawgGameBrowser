@@ -7,12 +7,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-/**
- * Base ViewModel with MVI-flavored MVVM pattern.
- *
- * Provides type-safe UI state management, abstract event handling,
- * and atomic state updates via reducer pattern.
- */
 abstract class BaseVm<UIState : UiState, UIEvent : UiEvent>(
     initialState: UIState
 ) : ViewModel() {

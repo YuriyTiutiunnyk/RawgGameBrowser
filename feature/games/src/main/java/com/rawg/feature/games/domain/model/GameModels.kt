@@ -48,8 +48,6 @@ data class GameDetail(
     val platforms: List<String>,
     val developers: List<String>,
     val publishers: List<String>,
-    val website: String?,
     val esrbRating: String?,
-    val ratingsCount: Int,
     val playtime: Int
 )

@@ -18,28 +18,19 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val gamesModule = module {
-
     single<GamesServiceApi> { get<Retrofit>().create(GamesServiceApi::class.java) }
-
     single {
         Room.databaseBuilder(androidContext(), GamesDatabase::class.java, "rawg_games_db").build()
     }
-
     single { GameDetailMapper() }
-
     single<GamesRemoteDataSource> {
         GamesRemoteDataSourceImpl(gamesServiceApi = get(), retrofitHelper = get())
     }
-
     single<GamesRepository> {
         GamesRepositoryImpl(database = get(), remoteDataSource = get(), gameDetailMapper = get())
     }
-
     factory { GetGamesUseCase(repository = get()) }
     factory { GetGameDetailUseCase(repository = get()) }
-
     viewModel { GamesListVm(getGamesUseCase = get()) }
-    viewModel { params ->
-        GameDetailVm(gameId = params[0], getGameDetailUseCase = get())
-    }
+    viewModel { params -> GameDetailVm(gameId = params[0], getGameDetailUseCase = get()) }
 }
