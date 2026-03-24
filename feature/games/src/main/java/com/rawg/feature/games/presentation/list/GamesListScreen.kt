@@ -30,6 +30,7 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun GamesListScreen(
+    onNavigateToDetail: (Int) -> Unit,
     viewModel: GamesListVm = koinViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -54,9 +55,7 @@ fun GamesListScreen(
             is DataState.Empty -> Box(
                 modifier = Modifier.fillMaxSize().padding(paddingValues),
                 contentAlignment = Alignment.Center
-            ) {
-                Text("No games found", style = MaterialTheme.typography.bodyLarge)
-            }
+            ) { Text("No games found", style = MaterialTheme.typography.bodyLarge) }
             is DataState.Success -> {
                 val spacing = MaterialTheme.spacing
                 LazyColumn(
@@ -72,7 +71,7 @@ fun GamesListScreen(
                             name = game.name,
                             imageUrl = game.imageUrl,
                             rating = game.rating,
-                            onClick = { /* TODO: navigate to detail */ }
+                            onClick = { onNavigateToDetail(game.id) }
                         )
                     }
                 }
