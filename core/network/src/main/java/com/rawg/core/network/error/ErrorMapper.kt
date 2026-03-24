@@ -1,30 +1,34 @@
 package com.rawg.core.network.error
 
+import com.rawg.core.common.error.ErrorEntity
+import com.rawg.core.common.error.ErrorMessageMapper
+
 /**
- * Maps [NetworkErrorEntity] instances to user-friendly display messages.
+ * Maps [ErrorEntity] instances to user-friendly display messages.
  *
- * Provides a centralized location for error message localization and customization.
+ * Implements [ErrorMessageMapper] from `core:common` so that `core:presentation`
+ * can depend on the abstraction without knowing about this implementation.
  */
-class ErrorMapper {
+class ErrorMapper : ErrorMessageMapper {
 
     /**
-     * Converts a [NetworkErrorEntity] to a human-readable error message.
+     * Converts an [ErrorEntity] to a human-readable error message.
      */
-    fun map(error: NetworkErrorEntity): String {
+    override fun map(error: ErrorEntity): String {
         return when (error) {
-            is NetworkErrorEntity.NoConnectionError ->
+            is ErrorEntity.NoConnection ->
                 "No internet connection. Please check your network and try again."
 
-            is NetworkErrorEntity.TimeoutError ->
+            is ErrorEntity.Timeout ->
                 "Connection timed out. Please try again."
 
-            is NetworkErrorEntity.ServerError ->
+            is ErrorEntity.Server ->
                 "Something went wrong on our end. Please try again later."
 
-            is NetworkErrorEntity.HttpError ->
+            is ErrorEntity.Http ->
                 "Unable to load data. Please try again."
 
-            is NetworkErrorEntity.UnknownError ->
+            is ErrorEntity.Unknown ->
                 "An unexpected error occurred. Please try again."
         }
     }

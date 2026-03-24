@@ -4,6 +4,8 @@ import com.google.gson.GsonBuilder
 import com.google.gson.Strictness
 import com.rawg.core.common.dispatcher.DefaultDispatcherProvider
 import com.rawg.core.common.dispatcher.DispatcherProvider
+import com.rawg.core.common.error.ErrorMessageMapper
+import com.rawg.core.common.error.ExceptionHandler
 import com.rawg.core.network.error.ErrorMapper
 import com.rawg.core.network.error.NetworkExceptionHandler
 import com.rawg.core.network.helper.RetrofitHelper
@@ -23,6 +25,8 @@ private const val TIMEOUT_SECONDS = 30L
  * Koin module providing all networking dependencies.
  *
  * Configures Retrofit, OkHttp, Gson, interceptors, and error handling utilities.
+ * Provides [ExceptionHandler] and [ErrorMessageMapper] abstractions that
+ * `core:presentation` depends on without knowing about `core:network`.
  *
  * @param apiKey The RAWG API key to be injected into all requests.
  * @param isDebug Whether to enable HTTP logging (should be true only in debug builds).
@@ -63,9 +67,9 @@ fun networkModule(apiKey: String, isDebug: Boolean) = module {
             .build()
     }
 
-    single { NetworkExceptionHandler() }
+    single<ExceptionHandler> { NetworkExceptionHandler() }
 
-    single { ErrorMapper() }
+    single<ErrorMessageMapper> { ErrorMapper() }
 
     single<RetrofitHelper> {
         RetrofitHelperImpl(
