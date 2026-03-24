@@ -1,13 +1,14 @@
 package com.rawg.feature.games.presentation.detail
 
-import com.rawg.core.presentation.extensions.networkExecutor
+import com.rawg.core.presentation.extensions.NetworkExecutor
 import com.rawg.core.presentation.vm.BaseVm
 import com.rawg.feature.games.domain.interactor.GetGameDetailUseCase
 
 class GameDetailVm(
     private val gameId: Int,
-    private val getGameDetailUseCase: GetGameDetailUseCase
-) : BaseVm<GameDetailState, GameDetailEvent>(GameDetailState()) {
+    private val getGameDetailUseCase: GetGameDetailUseCase,
+    networkExecutor: NetworkExecutor
+) : BaseVm<GameDetailState, GameDetailEvent>(GameDetailState(), networkExecutor) {
 
     init { loadGameDetail() }
 

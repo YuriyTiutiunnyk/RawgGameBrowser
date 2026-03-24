@@ -17,20 +17,59 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
+/**
+ * Koin DI module for the Games feature.
+ */
 val gamesModule = module {
-    single<GamesServiceApi> { get<Retrofit>().create(GamesServiceApi::class.java) }
+
+    // API
+    single<GamesServiceApi> {
+        get<Retrofit>().create(GamesServiceApi::class.java)
+    }
+
+    // Database
     single {
-        Room.databaseBuilder(androidContext(), GamesDatabase::class.java, "rawg_games_db").build()
+        Room.databaseBuilder(
+            androidContext(),
+            GamesDatabase::class.java,
+            "rawg_games_db"
+        ).fallbackToDestructiveMigration().build()
     }
+
+    // Mappers
     single { GameDetailMapper() }
+
+    // DataSource
     single<GamesRemoteDataSource> {
-        GamesRemoteDataSourceImpl(gamesServiceApi = get(), retrofitHelper = get())
+        GamesRemoteDataSourceImpl(
+            gamesServiceApi = get(),
+            retrofitHelper = get()
+        )
     }
+
+    // Repository
     single<GamesRepository> {
-        GamesRepositoryImpl(database = get(), remoteDataSource = get(), gameDetailMapper = get())
+        GamesRepositoryImpl(
+            database = get(),
+            remoteDataSource = get(),
+            gameDetailMapper = get()
+        )
     }
+
+    // Use Cases
     factory { GetGamesUseCase(repository = get()) }
     factory { GetGameDetailUseCase(repository = get()) }
-    viewModel { GamesListVm(getGamesUseCase = get()) }
-    viewModel { params -> GameDetailVm(gameId = params[0], getGameDetailUseCase = get()) }
+
+    // ViewModels
+    viewModel {
+        GamesListVm(getGamesUseCase = get(), networkExecutor = get())
+    }
+
+    viewModel { params ->
+        GameDetailVm(
+            gameId = params[0],
+            getGameDetailUseCase = get(),
+            networkExecutor = get()
+        )
+    }
 }

@@ -1,13 +1,21 @@
 package com.rawg.feature.games.presentation.list
 
 import com.rawg.core.common.result.DataState
-import com.rawg.core.presentation.extensions.networkExecutor
+import com.rawg.core.presentation.extensions.NetworkExecutor
 import com.rawg.core.presentation.vm.BaseVm
+import com.rawg.feature.games.domain.interactor.GetGamesParams
 import com.rawg.feature.games.domain.interactor.GetGamesUseCase
 
+/**
+ * ViewModel for the Games List screen.
+ *
+ * Manual pagination — accumulates items in [GamesListState.games].
+ * Single source of truth via UiState (no Paging 3 dependency).
+ */
 class GamesListVm(
-    private val getGamesUseCase: GetGamesUseCase
-) : BaseVm<GamesListState, GamesListEvent>(GamesListState()) {
+    private val getGamesUseCase: GetGamesUseCase,
+    networkExecutor: NetworkExecutor
+) : BaseVm<GamesListState, GamesListEvent>(GamesListState(), networkExecutor) {
 
     private var currentPage = 1
 
@@ -19,6 +27,7 @@ class GamesListVm(
         when (event) {
             is GamesListEvent.LoadMore,
             is GamesListEvent.RetryLoadMore -> loadMore()
+
             is GamesListEvent.Retry -> loadGames()
         }
     }
@@ -27,7 +36,7 @@ class GamesListVm(
         currentPage = 1
         networkExecutor {
             onStart { updateState { copy(games = DataState.Loading) } }
-            execute { getGamesUseCase(page = currentPage) }
+            execute { getGamesUseCase(GetGamesParams(page = currentPage)) }
             success { page ->
                 updateState {
                     copy(
@@ -37,7 +46,9 @@ class GamesListVm(
                     )
                 }
             }
-            error { message -> updateState { copy(games = DataState.Error(message)) } }
+            error { message ->
+                updateState { copy(games = DataState.Error(message)) }
+            }
         }
     }
 
@@ -49,7 +60,7 @@ class GamesListVm(
         currentPage++
         networkExecutor {
             onStart { updateState { copy(isLoadingMore = true, loadMoreError = null) } }
-            execute { getGamesUseCase(page = currentPage) }
+            execute { getGamesUseCase(GetGamesParams(page = currentPage)) }
             success { page ->
                 updateState {
                     copy(
