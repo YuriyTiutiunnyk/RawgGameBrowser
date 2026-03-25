@@ -24,11 +24,7 @@ data class GameItemDto(
     @SerializedName("id") val id: Int,
     @SerializedName("name") val name: String,
     @SerializedName("background_image") val backgroundImage: String?,
-    @SerializedName("rating") val rating: Double,
-    @SerializedName("released") val released: String?,
-    @SerializedName("metacritic") val metacritic: Int?,
-    @SerializedName("genres") val genres: List<GenreDto>?,
-    @SerializedName("platforms") val platforms: List<PlatformWrapperDto>?
+    @SerializedName("rating") val rating: Double
 )
 
 /**
@@ -49,9 +45,7 @@ data class GameDetailResponseDto(
     @SerializedName("platforms") val platforms: List<PlatformWrapperDto>?,
     @SerializedName("developers") val developers: List<DeveloperDto>?,
     @SerializedName("publishers") val publishers: List<PublisherDto>?,
-    @SerializedName("website") val website: String?,
     @SerializedName("esrb_rating") val esrbRating: EsrbRatingDto?,
-    @SerializedName("ratings_count") val ratingsCount: Int?,
     @SerializedName("playtime") val playtime: Int?
 )
 

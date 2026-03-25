@@ -34,9 +34,7 @@ fun GameDetailResponseDto.toEntity(): GameDetailEntity = GameDetailEntity(
     platforms = platforms?.map { it.platform.name }.orEmpty(),
     developers = developers?.map { it.name }.orEmpty(),
     publishers = publishers?.map { it.name }.orEmpty(),
-    website = website,
     esrbRating = esrbRating?.name,
-    ratingsCount = ratingsCount ?: 0,
     playtime = playtime ?: 0
 )
 
@@ -61,8 +59,6 @@ fun GameDetailEntity.toDomain(): GameDetail = GameDetail(
     platforms = platforms,
     developers = developers,
     publishers = publishers,
-    website = website,
     esrbRating = esrbRating,
-    ratingsCount = ratingsCount,
     playtime = playtime
 )

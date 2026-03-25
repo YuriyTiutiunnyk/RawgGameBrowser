@@ -9,10 +9,6 @@ import com.rawg.feature.games.data.dto.GamesListResponseDto
  * Implementation of [GamesRemoteDataSource] using Retrofit.
  *
  * Delegates API calls through [RetrofitHelper] for centralized error handling.
- * Delegates API calls through [RetrofitHelper] for centralized error handling.
- *
- * @param gamesServiceApi The Retrofit service interface for the RAWG API.
- * @param retrofitHelper Helper for executing API calls with error handling.
  */
 class GamesRemoteDataSourceImpl(
     private val gamesServiceApi: GamesServiceApi,

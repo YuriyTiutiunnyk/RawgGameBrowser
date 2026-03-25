@@ -13,11 +13,8 @@ val Pink40 = Color(0xFF7D5260)
 
 // ── Surface & Background ──
 val SurfaceDark = Color(0xFF121212)
-val CardBackground = Color(0xFF1E1E2E)
-val CardBackgroundLight = Color(0xFFF5F5F5)
 
 // ── Rating ──
-val RatingGold = Color(0xFFFFC107)
 val RatingStar = Color(0xFFFFD54F)
 
 // ── Metacritic ──

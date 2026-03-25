@@ -7,7 +7,6 @@ import androidx.room.Query
 
 /**
  * DAO for games list operations.
- * DAO for games list operations.
  */
 @Dao
 interface GamesDao {

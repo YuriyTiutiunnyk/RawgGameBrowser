@@ -42,7 +42,7 @@ class GamesListVm(
                     copy(
                         games = if (page.games.isEmpty()) DataState.Empty
                         else DataState.Success(page.games),
-                        hasMoreData = page.hasNextPage
+                        hasMoreData =  page.hasNextPage
                     )
                 }
             }

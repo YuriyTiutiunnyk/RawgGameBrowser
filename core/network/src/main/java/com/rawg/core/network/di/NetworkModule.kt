@@ -2,8 +2,6 @@ package com.rawg.core.network.di
 
 import com.google.gson.GsonBuilder
 import com.google.gson.Strictness
-import com.rawg.core.common.dispatcher.DefaultDispatcherProvider
-import com.rawg.core.common.dispatcher.DispatcherProvider
 import com.rawg.core.common.error.ErrorMessageMapper
 import com.rawg.core.common.error.ExceptionHandler
 import com.rawg.core.network.error.ErrorMapper
@@ -32,8 +30,6 @@ private const val TIMEOUT_SECONDS = 30L
  * @param isDebug Whether to enable HTTP logging (should be true only in debug builds).
  */
 fun networkModule(apiKey: String, isDebug: Boolean) = module {
-
-    single<DispatcherProvider> { DefaultDispatcherProvider() }
 
     single {
         GsonBuilder()
@@ -72,9 +68,6 @@ fun networkModule(apiKey: String, isDebug: Boolean) = module {
     single<ErrorMessageMapper> { ErrorMapper() }
 
     single<RetrofitHelper> {
-        RetrofitHelperImpl(
-            dispatcherProvider = get(),
-            exceptionHandler = get()
-        )
+        RetrofitHelperImpl(exceptionHandler = get())
     }
 }

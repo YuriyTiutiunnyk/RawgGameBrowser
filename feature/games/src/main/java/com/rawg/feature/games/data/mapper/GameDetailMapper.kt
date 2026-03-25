@@ -24,9 +24,7 @@ class GameDetailMapper : Mapper<GameDetailResponseDto, GameDetail> {
         platforms = model.platforms?.map { it.platform.name }.orEmpty(),
         developers = model.developers?.map { it.name }.orEmpty(),
         publishers = model.publishers?.map { it.name }.orEmpty(),
-        website = model.website,
         esrbRating = model.esrbRating?.name,
-        ratingsCount = model.ratingsCount ?: 0,
         playtime = model.playtime ?: 0
     )
 }

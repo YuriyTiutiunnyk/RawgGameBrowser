@@ -6,10 +6,6 @@ import com.google.gson.reflect.TypeToken
 
 /**
  * Room [TypeConverter] for storing `List<String>` as JSON in the database.
- *
- * Uses Gson for serialization/deserialization. Replaces the previous
- * comma-separated approach which was fragile (values containing commas
- * would break parsing).
  */
 class StringListConverter {
 
