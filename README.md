@@ -188,13 +188,3 @@ navController.navigate(GameDetailRoute(gameId = 3498))
 2. Open in Android Studio → Sync → Run
 
 > ℹ️ A test API key is already included in `gradle.properties` for convenience. You can replace it with your own from [rawg.io/apidocs](https://rawg.io/apidocs).
-
----
-
-## 📖 Documentation
-
-See [DOCUMENTATION_ENG.md](DOCUMENTATION_ENG.md) for an in-depth technical breakdown covering:
-- Detailed module analysis with code examples
-- Design decisions and trade-offs (Koin vs Hilt, Retrofit vs Ktor, Room vs DataStore, manual pagination vs Paging 3)
-- Complete data flow walkthrough
-- Kotlin Coroutines deep-dive (scopes, dispatchers, structured concurrency, Flow operators)
